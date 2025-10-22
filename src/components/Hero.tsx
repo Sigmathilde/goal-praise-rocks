@@ -24,7 +24,7 @@ const Hero = () => {
           Commit to your goals. Share your journey. Celebrate achievements that last forever.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <Button size="lg" variant="hero" className="text-lg">
+          <Button size="lg" variant="hero" className="text-lg" onClick={() => window.location.href = '/auth'}>
             Start Your Journey <ArrowRight className="ml-2" />
           </Button>
           <Button size="lg" variant="hero-outline" className="text-lg">
