@@ -11,6 +11,91 @@ import GoalSlot from "@/components/GoalSlot";
 import GoalCard from "@/components/GoalCard";
 import { toast } from "sonner";
 
+// Mock community goals for demonstration
+const mockCommunityGoals = [
+  {
+    id: 'mock-1',
+    title: 'Run a marathon',
+    description: 'Training for my first marathon in 6 months',
+    is_completed: false,
+    created_at: '2025-01-15T10:00:00Z',
+    user_id: 'mock-user-1',
+    profiles: { username: 'sarah_chen' }
+  },
+  {
+    id: 'mock-2',
+    title: 'Learn Spanish',
+    description: 'Practice 30 minutes daily with Duolingo',
+    is_completed: false,
+    created_at: '2025-01-14T15:30:00Z',
+    user_id: 'mock-user-1',
+    profiles: { username: 'sarah_chen' }
+  },
+  {
+    id: 'mock-3',
+    title: 'Launch my startup',
+    description: 'Working on a sustainable fashion brand',
+    is_completed: false,
+    created_at: '2025-01-13T09:00:00Z',
+    user_id: 'mock-user-2',
+    profiles: { username: 'mike_rodriguez' }
+  },
+  {
+    id: 'mock-4',
+    title: 'Read 52 books',
+    description: 'One book per week this year',
+    is_completed: false,
+    created_at: '2025-01-12T18:45:00Z',
+    user_id: 'mock-user-2',
+    profiles: { username: 'mike_rodriguez' }
+  },
+  {
+    id: 'mock-5',
+    title: 'Master piano',
+    description: 'Learning Chopin nocturnes',
+    is_completed: false,
+    created_at: '2025-01-11T14:20:00Z',
+    user_id: 'mock-user-3',
+    profiles: { username: 'emma_johnson' }
+  },
+  {
+    id: 'mock-6',
+    title: 'Build a SaaS product',
+    description: 'Creating a project management tool',
+    is_completed: false,
+    created_at: '2025-01-10T11:00:00Z',
+    user_id: 'mock-user-4',
+    profiles: { username: 'alex_kumar' }
+  },
+  {
+    id: 'mock-7',
+    title: 'Get fit',
+    description: 'Gym 4x per week and meal prep',
+    is_completed: false,
+    created_at: '2025-01-09T08:30:00Z',
+    user_id: 'mock-user-4',
+    profiles: { username: 'alex_kumar' }
+  },
+  {
+    id: 'mock-8',
+    title: 'Travel to 10 countries',
+    description: 'Exploring Europe this summer',
+    is_completed: false,
+    created_at: '2025-01-08T16:00:00Z',
+    user_id: 'mock-user-5',
+    profiles: { username: 'lisa_park' }
+  },
+  {
+    id: 'mock-9',
+    title: 'Write a novel',
+    description: '50,000 words by end of year',
+    is_completed: false,
+    created_at: '2025-01-07T13:15:00Z',
+    user_id: 'mock-user-5',
+    profiles: { username: 'lisa_park' }
+  }
+];
+
 const App = () => {
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
@@ -74,7 +159,12 @@ const App = () => {
       .limit(20);
 
     if (!error && data) {
-      setFeedGoals(data);
+      // Combine real goals with mock goals
+      const combinedGoals = [...data, ...mockCommunityGoals];
+      setFeedGoals(combinedGoals);
+    } else {
+      // If there's an error or no data, just show mock goals
+      setFeedGoals(mockCommunityGoals);
     }
   };
 
