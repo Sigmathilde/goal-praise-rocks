@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { LogOut } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { LogOut, Search, User } from "lucide-react";
 import GoalSlot from "@/components/GoalSlot";
 import GoalCard from "@/components/GoalCard";
 import { toast } from "sonner";
@@ -13,6 +16,8 @@ const App = () => {
   const navigate = useNavigate();
   const [userGoals, setUserGoals] = useState<any[]>([]);
   const [feedGoals, setFeedGoals] = useState<any[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [userProfile, setUserProfile] = useState<any>(null);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -22,11 +27,26 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
+      fetchUserProfile();
       fetchUserGoals();
       fetchFeedGoals();
       subscribeToChanges();
     }
   }, [user]);
+
+  const fetchUserProfile = async () => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from('profiles')
+      .select('*')
+      .eq('id', user.id)
+      .single();
+
+    if (!error && data) {
+      setUserProfile(data);
+    }
+  };
 
   const fetchUserGoals = async () => {
     if (!user) return;
@@ -137,16 +157,51 @@ const App = () => {
 
   const emptySlots = Math.max(0, 3 - userGoals.length);
 
+  const filteredFeedGoals = feedGoals.filter((goal) => {
+    if (!searchQuery) return true;
+    const query = searchQuery.toLowerCase();
+    const username = goal.profiles?.username?.toLowerCase() || "";
+    const title = goal.title?.toLowerCase() || "";
+    const description = goal.description?.toLowerCase() || "";
+    return username.includes(query) || title.includes(query) || description.includes(query);
+  });
+
   return (
     <div className="min-h-screen bg-gradient-stone">
       {/* Header */}
       <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Written in Stone</h1>
-          <Button variant="ghost" onClick={signOut}>
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between gap-4">
+          <h1 className="text-2xl font-bold whitespace-nowrap">Written in Stone</h1>
+          
+          <div className="flex-1 max-w-md relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search people and goals..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="rounded-full">
+                <Avatar>
+                  <AvatarImage src={userProfile?.avatar_url} />
+                  <AvatarFallback>
+                    <User className="w-4 h-4" />
+                  </AvatarFallback>
+                </Avatar>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={signOut}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </header>
 
@@ -179,9 +234,14 @@ const App = () => {
         <section>
           <h2 className="text-3xl font-bold mb-6">Community Goals</h2>
           <div className="space-y-6 max-w-2xl mx-auto">
-            {feedGoals.map((goal) => (
+            {filteredFeedGoals.map((goal) => (
               <GoalCard key={goal.id} goal={goal} />
             ))}
+            {filteredFeedGoals.length === 0 && feedGoals.length > 0 && (
+              <p className="text-center text-muted-foreground py-12">
+                No goals found matching "{searchQuery}"
+              </p>
+            )}
             {feedGoals.length === 0 && (
               <p className="text-center text-muted-foreground py-12">
                 No community goals yet. Be the first to share yours!
