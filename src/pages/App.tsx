@@ -5,8 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { LogOut, Search, User } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { LogOut, Search, User, Settings, HelpCircle, UserCircle } from "lucide-react";
 import GoalSlot from "@/components/GoalSlot";
 import GoalCard from "@/components/GoalCard";
 import { toast } from "sonner";
@@ -195,7 +195,20 @@ const App = () => {
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuItem>
+                <UserCircle className="w-4 h-4 mr-2" />
+                View Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <HelpCircle className="w-4 h-4 mr-2" />
+                Help & Support
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={signOut}>
                 <LogOut className="w-4 h-4 mr-2" />
                 Sign Out
@@ -233,7 +246,7 @@ const App = () => {
         {/* Social Feed */}
         <section>
           <h2 className="text-3xl font-bold mb-6">Community Goals</h2>
-          <div className="space-y-6 max-w-2xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
             {filteredFeedGoals.map((goal) => (
               <GoalCard key={goal.id} goal={goal} />
             ))}
