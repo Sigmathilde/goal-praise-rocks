@@ -311,7 +311,16 @@ const App = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Your Goals Section */}
         <section className="mb-12">
-          <h2 className="text-3xl font-bold mb-6">Your Goals</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-bold">Your Goals</h2>
+            {userGoals.length < 3 && (
+              <GoalSlot
+                onAdd={handleAddGoal}
+                onComplete={handleCompleteGoal}
+                onDelete={handleDeleteGoal}
+              />
+            )}
+          </div>
           <div className="grid md:grid-cols-3 gap-6">
             {userGoals.map((goal) => (
               <GoalSlot

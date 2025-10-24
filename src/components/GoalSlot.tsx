@@ -38,44 +38,52 @@ const GoalSlot = ({ goal, onAdd, onComplete, onDelete }: GoalSlotProps) => {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Card className="h-48 border-2 border-dashed border-muted-foreground/30 hover:border-accent hover:shadow-stone transition-all cursor-pointer">
-            <CardContent className="flex items-center justify-center h-full">
-              <div className="text-center">
-                <Plus className="w-12 h-12 mx-auto mb-2 text-muted-foreground" />
-                <p className="text-sm text-muted-foreground">Add a goal</p>
-              </div>
-            </CardContent>
-          </Card>
+          <Button variant="achievement" size="lg" className="gap-2">
+            <Plus className="w-5 h-5" />
+            Create New Goal
+          </Button>
         </DialogTrigger>
-        <DialogContent>
+        <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Create New Goal</DialogTitle>
-            <DialogDescription>
-              Set a meaningful goal that you're committed to achieving
+            <DialogTitle className="text-2xl">Create Your Goal</DialogTitle>
+            <DialogDescription className="text-base">
+              Write down what you want to achieve. Once completed, it will be written in stone forever! 🪨
             </DialogDescription>
           </DialogHeader>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="title">Goal Title</Label>
+              <Label htmlFor="title" className="text-base font-semibold">
+                What do you want to achieve? *
+              </Label>
               <Input
                 id="title"
-                placeholder="Learn to play guitar"
+                placeholder="e.g., Run a marathon, Learn Spanish, Start a business"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
+                className="text-base"
               />
+              <p className="text-xs text-muted-foreground">
+                Make it specific and measurable
+              </p>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="description">Description (optional)</Label>
+              <Label htmlFor="description" className="text-base font-semibold">
+                How will you achieve it? (optional)
+              </Label>
               <Textarea
                 id="description"
-                placeholder="Practice 30 minutes daily, learn basic chords..."
+                placeholder="e.g., Practice 30 minutes daily, join a running club, work on it every weekend..."
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                rows={3}
+                rows={4}
+                className="text-base"
               />
+              <p className="text-xs text-muted-foreground">
+                Add details about your plan and timeline
+              </p>
             </div>
-            <Button type="submit" variant="achievement" className="w-full">
+            <Button type="submit" variant="achievement" className="w-full" size="lg">
               Create Goal
             </Button>
           </form>
