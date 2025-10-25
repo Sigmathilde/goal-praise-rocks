@@ -229,22 +229,54 @@ const GoalCard = ({ goal }: GoalCardProps) => {
         </div>
 
         {showComments && (
-          <div className="w-full space-y-3">
-            {comments.map((comment) => (
-              <div key={comment.id} className="bg-stone-100/70 dark:bg-stone-800/40 p-3 rounded-lg border border-stone-200/50 dark:border-stone-700/50">
-                <p className="font-semibold text-sm text-stone-900 dark:text-stone-100">{comment.profiles.username}</p>
-                <p className="text-sm text-stone-700 dark:text-stone-300">{comment.content}</p>
+          <div className="w-full space-y-4 animate-in slide-in-from-top-2 duration-200">
+            {comments.length > 0 ? (
+              <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+                {comments.map((comment) => (
+                  <div 
+                    key={comment.id} 
+                    className="bg-gradient-to-br from-stone-100/90 to-stone-50/60 dark:from-stone-800/50 dark:to-stone-900/30 p-4 rounded-xl border border-stone-200/60 dark:border-stone-700/40 shadow-sm hover:shadow-md transition-all"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Avatar className="w-8 h-8 border-2 border-stone-300/50 dark:border-stone-600/50">
+                        <AvatarFallback className="bg-gradient-to-br from-stone-200 to-stone-300 dark:from-stone-700 dark:to-stone-800 text-stone-700 dark:text-stone-200 text-xs font-semibold">
+                          {comment.profiles.username[0].toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-sm text-stone-900 dark:text-stone-100 mb-1">
+                          {comment.profiles.username}
+                        </p>
+                        <p className="text-sm text-stone-700 dark:text-stone-300 leading-relaxed break-words">
+                          {comment.content}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-            <form onSubmit={handleComment} className="flex gap-2">
+            ) : (
+              <div className="text-center py-6 text-stone-500 dark:text-stone-400">
+                <MessageCircle className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                <p className="text-sm">No comments yet. Be the first to share your thoughts!</p>
+              </div>
+            )}
+            
+            <form onSubmit={handleComment} className="flex gap-2 pt-2 border-t border-stone-200/50 dark:border-stone-700/50">
               <Textarea
-                placeholder="Add a comment..."
+                placeholder="Share your thoughts..."
                 value={newComment}
                 onChange={(e) => setNewComment(e.target.value)}
                 rows={2}
-                className="bg-stone-50 dark:bg-stone-900/40 border-stone-300 dark:border-stone-700"
+                className="bg-stone-50/80 dark:bg-stone-900/40 border-stone-300 dark:border-stone-700 focus:border-stone-400 dark:focus:border-stone-600 transition-colors resize-none"
               />
-              <Button type="submit" size="sm" variant="achievement">
+              <Button 
+                type="submit" 
+                size="sm" 
+                variant="achievement"
+                disabled={!newComment.trim()}
+                className="self-end"
+              >
                 Post
               </Button>
             </form>

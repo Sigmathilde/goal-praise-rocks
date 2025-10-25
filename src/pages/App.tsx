@@ -11,87 +11,87 @@ import GoalSlot from "@/components/GoalSlot";
 import GoalCard from "@/components/GoalCard";
 import { toast } from "sonner";
 
-// Mock community goals for demonstration
+// Mock community goals for demonstration (using valid UUIDs)
 const mockCommunityGoals = [
   {
-    id: 'mock-1',
+    id: '00000000-0000-0000-0000-000000000001',
     title: 'Run a marathon',
     description: 'Training for my first marathon in 6 months',
     is_completed: false,
     created_at: '2025-01-15T10:00:00Z',
-    user_id: 'mock-user-1',
+    user_id: '00000000-0000-0000-0000-000000000101',
     profiles: { username: 'sarah_chen' }
   },
   {
-    id: 'mock-2',
+    id: '00000000-0000-0000-0000-000000000002',
     title: 'Learn Spanish',
     description: 'Practice 30 minutes daily with Duolingo',
     is_completed: false,
     created_at: '2025-01-14T15:30:00Z',
-    user_id: 'mock-user-1',
+    user_id: '00000000-0000-0000-0000-000000000101',
     profiles: { username: 'sarah_chen' }
   },
   {
-    id: 'mock-3',
+    id: '00000000-0000-0000-0000-000000000003',
     title: 'Launch my startup',
     description: 'Working on a sustainable fashion brand',
     is_completed: false,
     created_at: '2025-01-13T09:00:00Z',
-    user_id: 'mock-user-2',
+    user_id: '00000000-0000-0000-0000-000000000102',
     profiles: { username: 'mike_rodriguez' }
   },
   {
-    id: 'mock-4',
+    id: '00000000-0000-0000-0000-000000000004',
     title: 'Read 52 books',
     description: 'One book per week this year',
     is_completed: false,
     created_at: '2025-01-12T18:45:00Z',
-    user_id: 'mock-user-2',
+    user_id: '00000000-0000-0000-0000-000000000102',
     profiles: { username: 'mike_rodriguez' }
   },
   {
-    id: 'mock-5',
+    id: '00000000-0000-0000-0000-000000000005',
     title: 'Master piano',
     description: 'Learning Chopin nocturnes',
     is_completed: false,
     created_at: '2025-01-11T14:20:00Z',
-    user_id: 'mock-user-3',
+    user_id: '00000000-0000-0000-0000-000000000103',
     profiles: { username: 'emma_johnson' }
   },
   {
-    id: 'mock-6',
+    id: '00000000-0000-0000-0000-000000000006',
     title: 'Build a SaaS product',
     description: 'Creating a project management tool',
     is_completed: false,
     created_at: '2025-01-10T11:00:00Z',
-    user_id: 'mock-user-4',
+    user_id: '00000000-0000-0000-0000-000000000104',
     profiles: { username: 'alex_kumar' }
   },
   {
-    id: 'mock-7',
+    id: '00000000-0000-0000-0000-000000000007',
     title: 'Get fit',
     description: 'Gym 4x per week and meal prep',
     is_completed: false,
     created_at: '2025-01-09T08:30:00Z',
-    user_id: 'mock-user-4',
+    user_id: '00000000-0000-0000-0000-000000000104',
     profiles: { username: 'alex_kumar' }
   },
   {
-    id: 'mock-8',
+    id: '00000000-0000-0000-0000-000000000008',
     title: 'Travel to 10 countries',
     description: 'Exploring Europe this summer',
     is_completed: false,
     created_at: '2025-01-08T16:00:00Z',
-    user_id: 'mock-user-5',
+    user_id: '00000000-0000-0000-0000-000000000105',
     profiles: { username: 'lisa_park' }
   },
   {
-    id: 'mock-9',
+    id: '00000000-0000-0000-0000-000000000009',
     title: 'Write a novel',
     description: '50,000 words by end of year',
     is_completed: false,
     created_at: '2025-01-07T13:15:00Z',
-    user_id: 'mock-user-5',
+    user_id: '00000000-0000-0000-0000-000000000105',
     profiles: { username: 'lisa_park' }
   }
 ];
